@@ -3,12 +3,27 @@ echo "------> Installing For user "$1
 source .bashrc
 mkdir -p $HOME/yarn/yarn_data/hdfs/namenode
 mkdir -p $HOME/yarn/yarn_data/hdfs/datanode
-echo "------> Downloading Hadoop 2.2.0 package"
-YARN_HOME_DIR=/home/$1/yarn/hadoop-2.2.0
-wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
-echo "------> Installing Hadoop Package"
-tar -xvzf hadoop-2.2.0.tar.gz
-mv hadoop-2.2.0 $YARN_HOME_DIR
+
+echo "Select Package"
+echo "1.hadoop 2.2.0 >"
+echo "2.hadoop 2.3.0 >"
+echo -n "select the option 1 (hadoop 2.2.0) or 2 (hadoop 2.3.0): "
+read hadoop_version
+if [ $hadoop_version -eq 1 ]; then
+    echo "------> Downloading hadoop 2.2.0..........."
+	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.2.0
+	wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
+	echo "------> Installing Hadoop 2.2.0 Package"
+	tar -xvzf hadoop-2.2.0.tar.gz
+	mv hadoop-2.2.0 $YARN_HOME_DIR	
+else
+    echo "------> Downloading Hadoop 2.3.0..........."
+	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.3.0
+	wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz
+	echo "------> Installing Hadoop 2.3.0 Package"
+	tar -xvzf hadoop-2.3.0.tar.gz
+	mv hadoop-2.3.0 $YARN_HOME_DIR	
+fi
 chmod -R 755 $YARN_HOME_DIR
 cp -rf conf/yarn/core-site.xml $YARN_HOME_DIR/etc/hadoop/core-site.xml
 cp -rf conf/yarn/mapred-site.xml $YARN_HOME_DIR/etc/hadoop/mapred-site.xml
@@ -38,4 +53,8 @@ echo "Uploading Wordcount program to hdfs....."
 bin/hadoop dfs -copyFromLocal input /input
 sleep 5
 echo "Executing Sample Hello world Example....."
-bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
+if [ $hadoop_version -eq 1 ]; then
+    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
+else
+    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
+fi
