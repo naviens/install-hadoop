@@ -1,7 +1,7 @@
-Apache Hadoop 2.2.0 Installation
+Apache Hadoop 2.X.X Installation
 ==============
 
-Apache Hadoop 2.2.0 installation...
+Apache Hadoop 2.X.X installation...
 
 Steps to be done before running setup.sh
 
