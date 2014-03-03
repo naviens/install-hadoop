@@ -1,0 +1,15 @@
+#python files
+*.pyc
+.ipy*
+*.ipynb
+
+# setuptools stuff
+*.egg-info
+*.tar.gz
+
+# IDE files
+/.project
+/.pydevproject
+/.idea
+/.ropeproject
+/*.iml
