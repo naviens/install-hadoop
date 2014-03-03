@@ -1,4 +1,4 @@
-install-hadoop
+Apache Hadoop 2.2.0 Installation
 ==============
 
 Apache Hadoop 2.2.0 installation...
