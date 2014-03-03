@@ -15,6 +15,8 @@ Steps for Hadoop Installation
 
 >```$ sh setup.sh $USER```
 
+Now Check your Word count program result at 
+
+>```$ localhost:50070``` (output folder)
 
 Thats it :)
-
