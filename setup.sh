@@ -56,5 +56,5 @@ echo "Executing Sample Hello world Example....."
 if [ $hadoop_version -eq 1 ]; then
     bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
 else
-    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
+    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.3.0.jar wordcount /input /output
 fi
