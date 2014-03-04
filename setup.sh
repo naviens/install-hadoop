@@ -12,14 +12,24 @@ read hadoop_version
 if [ $hadoop_version -eq 1 ]; then
     echo "------> Downloading hadoop 2.2.0..........."
 	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.2.0
-	wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
+	if [ ! -f hadoop-2.3.0.tar.gz ]; then
+	    echo "Downloading File....!"
+	    wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
+	else
+	    echo "Using local File..."
+	fi
 	echo "------> Installing Hadoop 2.2.0 Package"
 	tar -xvzf hadoop-2.2.0.tar.gz
 	mv hadoop-2.2.0 $YARN_HOME_DIR	
 else
     echo "------> Downloading Hadoop 2.3.0..........."
 	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.3.0
-	wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz
+        if [ ! -f hadoop-2.3.0.tar.gz ]; then
+            echo "Downloading File....!"
+            wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz
+        else
+            echo "Using local File..."
+      	fi
 	echo "------> Installing Hadoop 2.3.0 Package"
 	tar -xvzf hadoop-2.3.0.tar.gz
 	mv hadoop-2.3.0 $YARN_HOME_DIR	
