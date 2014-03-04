@@ -21,7 +21,7 @@ Steps for Hadoop Installation
 
 ```3. Apache Spark 0.8.0```
 
->```$ select required option 1 or 2 or 3```
+```select required option 1 or 2 or 3 : |```
 
 
 Now Check your Word count program result at 
