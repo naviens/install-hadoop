@@ -6,6 +6,7 @@
 # setuptools stuff
 *.egg-info
 *.tar.gz
+*.tgz
 
 # IDE files
 /.project
