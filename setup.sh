@@ -8,8 +8,7 @@ mkdir -p $HOME/yarn/yarn_data/hdfs/datanode
 echo "Select Package"
 echo "1.hadoop 2.2.0 >"
 echo "2.hadoop 2.3.0 >"
-echo "3.spark 0.8.0 >"
-echo -n "select the option 1 or 2 or 3: "
+echo -n "select the option 1 or 2 : "
 read options
 if [ $options -eq 1 ]; then
     echo "------> Downloading hadoop 2.2.0..........."
@@ -37,11 +36,8 @@ then
 	tar -xvzf hadoop-2.3.0.tar.gz
 	mv hadoop-2.3.0 $YARN_HOME_DIR
 else
-    echo "--------> Downloading Apache Spark 0.8.0.........."
-    # Download and install Apache Spark
-    wget -c http://d3kbcqa49mib13.cloudfront.net/spark-0.9.0-incubating-bin-hadoop2.tgz
-    tar -xvzf spark-0.9.0-incubating-bin-hadoop2.tgz
-    mv spark-0.9.0-incubating-bin-hadoop2 $HOME_DIR
+    echo "--------> Invalid Option.........."
+    exit
 fi
 
 chmod -R 755 $YARN_HOME_DIR
@@ -73,12 +69,6 @@ echo "Uploading Wordcount program to hdfs....."
 bin/hadoop dfs -copyFromLocal input /input
 sleep 5
 echo "Executing Sample Hello world Example....."
-
-if [ $options -eq 3 ]; then
-    echo "Installing Spark....."
-    cd $HOME_DIR/spark-0.9.0-incubating-bin-hadoop2
-    sbin/start-all.sh
-fi
 
 if [ $options -eq 1 ]; then
     bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
