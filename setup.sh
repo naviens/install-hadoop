@@ -1,9 +1,12 @@
 #!/bin/sh
-echo "------> Installing For user "$1
-HOME_DIR=/home/$1/yarn
-source .bashrc
-mkdir -p $HOME/yarn/yarn_data/hdfs/namenode
-mkdir -p $HOME/yarn/yarn_data/hdfs/datanode
+
+prefix=$1
+user=`basename $prefix`
+echo "------> Installing For user "$user
+HOME_DIR=/home/$prefix/yarn
+source $HOME/.bashrc
+mkdir -p $HOME_DIR/yarn_data/hdfs/namenode
+mkdir -p $HOME_DIR/yarn_data/hdfs/datanode
 
 echo "Select Package"
 echo "1.hadoop 2.2.0 >"
@@ -13,8 +16,8 @@ echo -n "select the option 1 or 2 or 3 : "
 read options
 if [ $options -eq 1 ]; then
     echo "------> Downloading hadoop 2.2.0..........."
-	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.2.0
-	if [ ! -f hadoop-2.3.0.tar.gz ]; then
+	YARN_HOME_DIR=$HOME_DIR/hadoop-2.2.0
+	if [ ! -f hadoop-2.2.0.tar.gz ]; then
 	    echo "Downloading File....!"
 	    wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
 	else
@@ -22,11 +25,11 @@ if [ $options -eq 1 ]; then
 	fi
 	echo "------> Installing Hadoop 2.2.0 Package"
 	tar -xvzf hadoop-2.2.0.tar.gz
-	mv hadoop-2.2.0 $YARN_HOME_DIR	
+	mv hadoop-2.2.0 $YARN_HOME_DIR
 elif [ $options -eq 2 ]
 then
     echo "------> Downloading Hadoop 2.3.0..........."
-	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.3.0
+	YARN_HOME_DIR=$HOME_DIR/hadoop-2.3.0
     if [ ! -f hadoop-2.3.0.tar.gz ]; then
         echo "Downloading File....!"
         wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz
@@ -39,7 +42,7 @@ then
 elif [ $options -eq 3 ]
 then
     echo "------> Downloading Hadoop 2.4.0..........."
-	YARN_HOME_DIR=/home/$1/yarn/hadoop-2.4.0
+	YARN_HOME_DIR=$HOME_DIR/hadoop-2.4.0
     if [ ! -f hadoop-2.4.0.tar.gz ]; then
         echo "Downloading File....!"
         wget -c http://apache.mirrors.hoobly.com/hadoop/common/hadoop-2.4.0/hadoop-2.4.0.tar.gz
@@ -73,7 +76,7 @@ sbin/yarn-daemon.sh start resourcemanager
 sbin/yarn-daemon.sh start nodemanager
 sbin/mr-jobhistory-daemon.sh start historyserver
 
-echo "------> Verifying Installation For user "$1
+echo "------> Verifying Installation For user "$user
 jps
 
 echo "---------> Successfully Installed Hadoop on your machine <--------------"
