@@ -26,7 +26,7 @@ Steps to be done before running setup.sh
 
 >      2. Hadoop 2.3.0
 
->      3. Apache Spark 0.8.0
+>      3.  Hadoop 2.4.0
 
 >      select required option 1 or 2 or 3 : |
 ---
