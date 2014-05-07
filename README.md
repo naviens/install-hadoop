@@ -9,9 +9,8 @@ Steps to be done before running setup.sh
 ---
 >      sudo apt-get install openssh-server
 
->``` Install Oracle Java Jdk 1.6 or 1.7```
+>``` install Oracle Java 7```
 ---
->      install Oracle Java 7
 >      sudo add-apt-repository ppa:webupd8team/java
 >      sudo apt-get update
 >      sudo apt-get install oracle-java7-installer 
