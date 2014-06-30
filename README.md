@@ -1,17 +1,20 @@
-Apache Hadoop 2.X.X and Apache Spark 0.8.0 Installation
+Apache Hadoop Installation
 ==============
 
-Apache Hadoop 2.X.X installation...
+Apache Hadoop installation...
 
 Steps to be done before running setup.sh
 
->``` Install Open ssh Server```
+>``` Install ssh Server```
 ---
->      sudo apt-get install openssh-server
+>      $ sudo apt-get install ssh
+>      $ ssh-keygen -t rsa -P ""
+>      $ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+>      $ ssh localhost
+>      $ exit
 
->``` Install Oracle Java Jdk 1.6 or 1.7```
+>``` install Oracle Java 7```
 ---
->      install Oracle Java 7
 >      sudo add-apt-repository ppa:webupd8team/java
 >      sudo apt-get update
 >      sudo apt-get install oracle-java7-installer 
@@ -22,13 +25,15 @@ Steps to be done before running setup.sh
 ---
 >      $ sh setup.sh $USER
 
->      1. Hadoop 2.2.0
+>      1. Hadoop 1.2.1
 
->      2. Hadoop 2.3.0
+>      2. Hadoop 2.2.0
 
->      3.  Hadoop 2.4.0
+>      3. Hadoop 2.3.0
 
->      select required option 1 or 2 or 3 : |
+>      4. Hadoop 2.4.0
+
+>      select required option 1 or 2 or 3 or 4: |
 ---
 
 
