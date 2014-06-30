@@ -7,7 +7,10 @@ Steps to be done before running setup.sh
 
 >``` Install Open ssh Server```
 ---
->      sudo apt-get install openssh-server
+>      $ sudo apt-get install ssh
+>      $ ssh-keygen -t rsa -P ""
+>      $ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+>      $ ssh localhost
 
 >``` install Oracle Java 7```
 ---
@@ -21,13 +24,15 @@ Steps to be done before running setup.sh
 ---
 >      $ sh setup.sh $USER
 
->      1. Hadoop 2.2.0
+>      1. Hadoop 1.2.1
 
->      2. Hadoop 2.3.0
+>      2. Hadoop 2.2.0
 
->      3. Hadoop 2.4.0
+>      3. Hadoop 2.3.0
 
->      select required option 1 or 2 or 3 : |
+>      4. Hadoop 2.4.0
+
+>      select required option 1 or 2 or 3 or 4: |
 ---
 
 
