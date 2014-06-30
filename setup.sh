@@ -116,10 +116,9 @@ sleep 20
 echo "Uploading Wordcount program to hdfs....."
 bin/hadoop dfs -copyFromLocal input /input
 sleep 5
-echo "Executing Sample Hello world Example....."
+echo "Executing Wordcount Example....."
 if [ $options -eq 1 ]; then
-    echo "Skipping examples....."
-    #bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
+    bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input /output
 elif [ $options -eq 2 ]; then
     bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
 elif [ $options -eq 3 ]; then
