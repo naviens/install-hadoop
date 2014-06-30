@@ -5,7 +5,7 @@ Apache Hadoop 2.X.X installation...
 
 Steps to be done before running setup.sh
 
->``` Install Open ssh Server```
+>``` Install ssh Server```
 ---
 >      $ sudo apt-get install ssh
 >      $ ssh-keygen -t rsa -P ""
