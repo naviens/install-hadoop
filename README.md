@@ -15,6 +15,7 @@ Steps to be done before running setup.sh
 
 >``` install Oracle Java 7```
 ---
+>      sudo apt-get install software-properties-common python-software-properties
 >      sudo add-apt-repository ppa:webupd8team/java
 >      sudo apt-get update
 >      sudo apt-get install oracle-java7-installer 
