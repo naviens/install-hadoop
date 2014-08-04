@@ -9,18 +9,18 @@ Steps to be done before running setup.sh
 ---
 >      $ sudo apt-get install ssh
 >      $ ssh-keygen -t rsa -P ""
->      $ cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+>      $ ssh-copy-id -i ~/.ssh/id_rsa.pub localhost
 >      $ ssh localhost
 >      $ exit
 
->``` install Oracle Java 7```
+>``` install OpenJdk 1.7```
 ---
->      sudo apt-get install software-properties-common python-software-properties
->      sudo add-apt-repository ppa:webupd8team/java
->      sudo apt-get update
->      sudo apt-get install oracle-java7-installer 
+>      sudo apt-get install openjdk-7-jdk
+
 
 >``` Set JAVA_HOME in .bashrc```
+>      export JAVA_HOME=/usr
+>      export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
 
 >``` Steps for Hadoop Installation```
 ---
