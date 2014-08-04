@@ -19,6 +19,7 @@ Steps to be done before running setup.sh
 
 
 >``` Set JAVA_HOME in .bashrc```
+---
 >      export JAVA_HOME=/usr
 >      export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
 
