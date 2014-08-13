@@ -3,6 +3,12 @@ Apache Hadoop Installation
 
 Apache Hadoop installation...
 
+
+>``` Clone This github repo ```
+---
+>      $ git clone https://github.com/naviens/install-hadoop.git
+>      $ cd install-hadoop
+
 Steps to be done before running setup.sh
 
 >``` Install ssh Server```
