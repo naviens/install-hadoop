@@ -14,7 +14,8 @@ echo "1.hadoop 1.2.1 >"
 echo "2.hadoop 2.2.0 >"
 echo "3.hadoop 2.3.0 >"
 echo "4.hadoop 2.4.0 >"
-echo -n "select the option 1 or 2 or 3 or 4: "
+echo "5.hadoop 2.5.0 >"
+echo -n "select the option 1 or 2 or 3 or 4 or 5: "
 read options
 if [ $options -eq 1 ]; then
     echo "------> Downloading hadoop 1.2.1..........."
@@ -66,6 +67,19 @@ then
 	echo "------> Installing Hadoop 2.4.0 Package"
 	tar xzf hadoop-2.4.0.tar.gz
 	mv hadoop-2.4.0 $YARN_HOME_DIR
+elif [ $options -eq 5 ]
+then
+    echo "------> Downloading Hadoop 2.5.0..........."
+	YARN_HOME_DIR=$HOME_DIR/hadoop-2.5.0
+    if [ ! -f hadoop-2.5.0.tar.gz ]; then
+        echo "Downloading File....!"
+        wget -c http://mirror.nexcess.net/apache/hadoop/common/hadoop-2.5.0/hadoop-2.5.0.tar.gz
+    else
+        echo "Using local File..."
+    fi
+	echo "------> Installing Hadoop 2.5.0 Package"
+	tar xzf hadoop-2.5.0.tar.gz
+	mv hadoop-2.5.0 $YARN_HOME_DIR
 else
     echo "--------> Invalid Option.........."
     exit
@@ -125,4 +139,6 @@ elif [ $options -eq 3 ]; then
     bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.3.0.jar wordcount /input /output
 elif [ $options -eq 4 ]; then
     bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar wordcount /input /output
+elif [ $options -eq 5 ]; then
+    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.0.jar wordcount /input /output
 fi
