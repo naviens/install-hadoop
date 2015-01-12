@@ -36,6 +36,13 @@ Steps to be done before running setup.sh
 >      Enter Hadoop Version No (Ex: 2.6.0) > 
 ---
 
+>``` Note```
+---
+>     if u get JAVA_HOME is not set error
+>      add this line in hadoop-env.sh available at (HADOOP_HOME/etc/hadoop)
+>      export JAVA_HOME=/usr
+---
+
 >```$ jps``` (to verify running Hadoop Daemons)
 
 Now Check your Word count program result at 
