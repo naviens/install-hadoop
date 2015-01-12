@@ -8,6 +8,7 @@ source $HOME/.bashrc
 mkdir -p $HOME_DIR
 # mkdir -p $HOME_DIR/yarn_data/hdfs/namenode
 # mkdir -p $HOME_DIR/yarn_data/hdfs/datanode
+echo "Valid Version nos are 1.2.1 , 2.4.0 , 2.5.2 , 2.6.0"
 echo -n "Enter Hadoop Version No (Ex: 2.6.0) > "
 read version
 echo "Fetching Download url for Hadoop version $version "
