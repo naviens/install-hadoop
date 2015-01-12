@@ -35,9 +35,8 @@ Steps to be done before running setup.sh
 >      Valid Version nos [1.2.1, 2.5.2, 2.6.0]
 >      Enter Hadoop Version No (Ex: 2.6.0) : 
 
->``` Note```
+>``` Note : If u get JAVA_HOME is not set error ```
 ---
->     if u get JAVA_HOME is not set error
 >      add this line in hadoop-env.sh available at (HADOOP_HOME/etc/hadoop)
 >      export JAVA_HOME=/usr
 
