@@ -41,7 +41,6 @@ Steps to be done before running setup.sh
 >     if u get JAVA_HOME is not set error
 >      add this line in hadoop-env.sh available at (HADOOP_HOME/etc/hadoop)
 >      export JAVA_HOME=/usr
----
 
 >```$ jps``` (to verify running Hadoop Daemons)
 
