@@ -8,137 +8,90 @@ source $HOME/.bashrc
 mkdir -p $HOME_DIR
 # mkdir -p $HOME_DIR/yarn_data/hdfs/namenode
 # mkdir -p $HOME_DIR/yarn_data/hdfs/datanode
+echo -n "Enter Hadoop Version No (Ex: 2.6.0) > "
+read version
+echo "Fetching Download url for Hadoop version $version "
+echo ${#version}
+if [ ${#version} -gt 2 ]
+then
+    YARN_HOME_DIR=$HOME_DIR/hadoop-${version}
+    mkdir $YARN_HOME_DIR/input
 
-echo "Select Package"
-echo "1.hadoop 1.2.1 >"
-echo "2.hadoop 2.2.0 >"
-echo "3.hadoop 2.3.0 >"
-echo "4.hadoop 2.4.0 >"
-echo "5.hadoop 2.5.0 >"
-echo -n "select the option 1 or 2 or 3 or 4 or 5: "
-read options
-if [ $options -eq 1 ]; then
-    echo "------> Downloading hadoop 1.2.1..........."
-	YARN_HOME_DIR=$HOME_DIR/hadoop-1.2.1
-	if [ ! -f hadoop-1.2.1.tar.gz ]; then
-	    echo "Downloading File....!"
-	    wget -c http://apache.mesi.com.ar/hadoop/common/stable1/hadoop-1.2.1.tar.gz
-	else
-	    echo "Using local File..."
-	fi
-	echo "------> Installing Hadoop 1.2.1 Package"
-	tar xzf hadoop-1.2.1.tar.gz
-	mv hadoop-1.2.1 $YARN_HOME_DIR
-elif [ $options -eq 2 ]; then
-    echo "------> Downloading hadoop 2.2.0..........."
-	YARN_HOME_DIR=$HOME_DIR/hadoop-2.2.0
-	if [ ! -f hadoop-2.2.0.tar.gz ]; then
-	    echo "Downloading File....!"
-	    wget -c http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-2.2.0.tar.gz
-	else
-	    echo "Using local File..."
-	fi
-	echo "------> Installing Hadoop 2.2.0 Package"
-	tar xzf hadoop-2.2.0.tar.gz
-	mv hadoop-2.2.0 $YARN_HOME_DIR
-elif [ $options -eq 3 ]
-then
-    echo "------> Downloading Hadoop 2.3.0..........."
-	YARN_HOME_DIR=$HOME_DIR/hadoop-2.3.0
-    if [ ! -f hadoop-2.3.0.tar.gz ]; then
+    if [ "$version" = "1.2.1" ]
+    then
+        MYURL=`echo "http://apache.mirrors.hoobly.com/hadoop/common/stable1/hadoop-${version}.tar.gz"`
+    else
+        MYURL=`echo "http://apache.mirrors.hoobly.com/hadoop/common/stable2/hadoop-${version}.tar.gz"`
+    fi
+
+    echo "<<<<<<<<< Downloading url >>>>>>>>>>"
+    echo $MYURL
+    echo "<<<<<<<<< Yarn_home >>>>>>>>>>"
+    echo "YARN_HOME_DIR=$HOME_DIR/hadoop-${version}"
+
+    if [ ! -f hadoop-${version}.tar.gz ]; then
         echo "Downloading File....!"
-        wget -c http://apache.mirrors.pair.com/hadoop/common/hadoop-2.3.0/hadoop-2.3.0.tar.gz
+        wget -c $MYURL
     else
         echo "Using local File..."
     fi
-	echo "------> Installing Hadoop 2.3.0 Package"
-	tar xzf hadoop-2.3.0.tar.gz
-	mv hadoop-2.3.0 $YARN_HOME_DIR
-elif [ $options -eq 4 ]
-then
-    echo "------> Downloading Hadoop 2.4.0..........."
-	YARN_HOME_DIR=$HOME_DIR/hadoop-2.4.0
-    if [ ! -f hadoop-2.4.0.tar.gz ]; then
-        echo "Downloading File....!"
-        wget -c http://apache.mirrors.hoobly.com/hadoop/common/hadoop-2.4.0/hadoop-2.4.0.tar.gz
+    echo "------> Installing Hadoop ${version} Package"
+    tar xzf hadoop-${version}.tar.gz
+    mv hadoop-${version} $YARN_HOME_DIR   
+
+    # Code 2
+
+    chmod -R 755 $YARN_HOME_DIR
+
+    mkdir $YARN_HOME_DIR/input
+    cp -rf file $YARN_HOME_DIR/input/
+
+    if [ "$version" = "1.2.1" ]
+    then
+        echo "------> Configuring 1.2.1..........."
+        cp -rf conf/core-site.xml $YARN_HOME_DIR/conf/core-site.xml
+        cp -rf conf/mapred-site.xml $YARN_HOME_DIR/conf/mapred-site.xml
+        cp -rf conf/mapred-site.xml $YARN_HOME_DIR/conf/mapred-site.xml
+        awk '{gsub("hadoop", "'${1}'", $0); print}' > $YARN_HOME_DIR/conf/hdfs-site.xml < conf/hdfs-site.xml
+        awk '{gsub("# export JAVA_HOME=/usr/lib/j2sdk1.5-sun", "export JAVA_HOME=/usr/", $0); print}' > $YARN_HOME_DIR/conf/hadoop-env.sh < conf/hadoop-env.sh
+        cd $YARN_HOME_DIR/
+        bin/hadoop namenode -format
+        # Start hadoop daemons.
+        bin/start-all.sh
     else
-        echo "Using local File..."
+        echo "--------> Configuring 2.X .........."
+        cp -rf conf/yarn/core-site.xml $YARN_HOME_DIR/etc/hadoop/core-site.xml
+        cp -rf conf/yarn/mapred-site.xml $YARN_HOME_DIR/etc/hadoop/mapred-site.xml
+        cp -rf conf/yarn/yarn-site.xml $YARN_HOME_DIR/etc/hadoop/yarn-site.xml
+        awk '{gsub("hadoop", "'${1}'", $0); print}' > $YARN_HOME_DIR/etc/hadoop/hdfs-site.xml < conf/yarn/hdfs-site.xml
+        cp conf/stop.sh $YARN_HOME_DIR/
+        cp conf/start.sh $YARN_HOME_DIR/
+        cd $YARN_HOME_DIR/
+        bin/hadoop namenode -format
+        # HDFS(NameNode & DataNode).
+        sbin/hadoop-daemon.sh start namenode
+        sbin/hadoop-daemon.sh start datanode
+        # MR(Resource Manager, Node Manager & Job History Server).
+        sbin/yarn-daemon.sh start resourcemanager
+        sbin/yarn-daemon.sh start nodemanager
+        sbin/mr-jobhistory-daemon.sh start historyserver
     fi
-	echo "------> Installing Hadoop 2.4.0 Package"
-	tar xzf hadoop-2.4.0.tar.gz
-	mv hadoop-2.4.0 $YARN_HOME_DIR
-elif [ $options -eq 5 ]
-then
-    echo "------> Downloading Hadoop 2.5.0..........."
-	YARN_HOME_DIR=$HOME_DIR/hadoop-2.5.0
-    if [ ! -f hadoop-2.5.0.tar.gz ]; then
-        echo "Downloading File....!"
-        wget -c http://mirror.nexcess.net/apache/hadoop/common/hadoop-2.5.0/hadoop-2.5.0.tar.gz
+
+    echo "------> Verifying Installation For user "$user
+    jps
+
+    echo "---------> Successfully Installed Hadoop on your machine <--------------"
+    echo "---------> waiting for hadoop daemons <---------------"
+    sleep 20
+    echo "Uploading Wordcount program to hdfs....."
+    bin/hadoop dfs -copyFromLocal input /input
+    sleep 5
+    echo "Executing Wordcount Example....."
+    if [ "$version" = "1.2.1" ]; then
+        bin/hadoop jar hadoop-examples-${version}.jar wordcount /input /output
     else
-        echo "Using local File..."
+        bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-${version}.jar wordcount /input /output
     fi
-	echo "------> Installing Hadoop 2.5.0 Package"
-	tar xzf hadoop-2.5.0.tar.gz
-	mv hadoop-2.5.0 $YARN_HOME_DIR
 else
-    echo "--------> Invalid Option.........."
-    exit
-fi
-
-chmod -R 755 $YARN_HOME_DIR
-
-mkdir $YARN_HOME_DIR/input
-cp -rf file $YARN_HOME_DIR/input/
-
-if [ $options -eq 1 ]
-then
-    echo "------> Configuring 1.2.1..........."
-    cp -rf conf/core-site.xml $YARN_HOME_DIR/conf/core-site.xml
-    cp -rf conf/mapred-site.xml $YARN_HOME_DIR/conf/mapred-site.xml
-    cp -rf conf/mapred-site.xml $YARN_HOME_DIR/conf/mapred-site.xml
-    awk '{gsub("hadoop", "'${1}'", $0); print}' > $YARN_HOME_DIR/conf/hdfs-site.xml < conf/hdfs-site.xml
-    awk '{gsub("# export JAVA_HOME=/usr/lib/j2sdk1.5-sun", "export JAVA_HOME=/usr/", $0); print}' > $YARN_HOME_DIR/conf/hadoop-env.sh < conf/hadoop-env.sh
-    cd $YARN_HOME_DIR/
-    bin/hadoop namenode -format
-    # Start hadoop daemons.
-    bin/start-all.sh
-else
-    echo "--------> Configuring 2.X .........."
-    cp -rf conf/yarn/core-site.xml $YARN_HOME_DIR/etc/hadoop/core-site.xml
-    cp -rf conf/yarn/mapred-site.xml $YARN_HOME_DIR/etc/hadoop/mapred-site.xml
-    cp -rf conf/yarn/yarn-site.xml $YARN_HOME_DIR/etc/hadoop/yarn-site.xml
-    awk '{gsub("hadoop", "'${1}'", $0); print}' > $YARN_HOME_DIR/etc/hadoop/hdfs-site.xml < conf/yarn/hdfs-site.xml
-    cp conf/stop.sh $YARN_HOME_DIR/
-    cp conf/start.sh $YARN_HOME_DIR/
-    cd $YARN_HOME_DIR/
-    bin/hadoop namenode -format
-    # HDFS(NameNode & DataNode).
-    sbin/hadoop-daemon.sh start namenode
-    sbin/hadoop-daemon.sh start datanode
-    # MR(Resource Manager, Node Manager & Job History Server).
-    sbin/yarn-daemon.sh start resourcemanager
-    sbin/yarn-daemon.sh start nodemanager
-    sbin/mr-jobhistory-daemon.sh start historyserver
-fi
-
-echo "------> Verifying Installation For user "$user
-jps
-
-echo "---------> Successfully Installed Hadoop on your machine <--------------"
-echo "---------> waiting for hadoop daemons <---------------"
-sleep 20
-echo "Uploading Wordcount program to hdfs....."
-bin/hadoop dfs -copyFromLocal input /input
-sleep 5
-echo "Executing Wordcount Example....."
-if [ $options -eq 1 ]; then
-    bin/hadoop jar hadoop-examples-1.2.1.jar wordcount /input /output
-elif [ $options -eq 2 ]; then
-    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.2.0.jar wordcount /input /output
-elif [ $options -eq 3 ]; then
-    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.3.0.jar wordcount /input /output
-elif [ $options -eq 4 ]; then
-    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar wordcount /input /output
-elif [ $options -eq 5 ]; then
-    bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.5.0.jar wordcount /input /output
+   echo "error"
 fi
