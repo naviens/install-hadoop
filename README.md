@@ -32,16 +32,8 @@ Steps to be done before running setup.sh
 >``` Steps for Hadoop Installation```
 ---
 >      $ sh setup.sh $USER
-
->      1. Hadoop 1.2.1
-
->      2. Hadoop 2.2.0
-
->      3. Hadoop 2.3.0
-
->      4. Hadoop 2.4.0
-
->      select required option 1 or 2 or 3 or 4: |
+>      Valid Version nos [1.2.1, 2.5.2, 2.6.0]
+>      Enter Hadoop Version No (Ex: 2.6.0) > 
 ---
 
 >```$ jps``` (to verify running Hadoop Daemons)
